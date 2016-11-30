@@ -29,6 +29,21 @@ function wporg_settings_init()
             'wporg_custom_data' => 'custom',
         ]
     );
+ 
+    // register a new field in the "wporg_section_developers" section, inside the "wporg" page
+    add_settings_field(
+        'wporg_field_ga_uid', // as of WP 4.6 this value is used only internally
+        // use $args' label_for to populate the id inside the callback
+        __('Google Analytics UID', 'wporg'),
+        'wporg_field_ga_uid_cb',
+        'wporg',
+        'wporg_section_developers',
+        [
+            'label_for'         => 'wporg_field_ga_uid',
+            'class'             => 'wporg_row',
+            'wporg_custom_data' => 'custom',
+        ]
+    );
 }
  
 /**
@@ -83,6 +98,26 @@ function wporg_field_type_cb($args)
     </p>
     <p class="description">
         <?= esc_html('Selecciona Producción para eliminar las opciones de desarrollo.', 'wporg'); ?>
+    </p>
+    <?php
+}
+
+function wporg_field_ga_uid_cb($args)
+{
+    // get the value of the setting we've registered with register_setting()
+    $options = get_option('wporg_options');
+    // output the field
+
+    ?>
+    <input id="<?= esc_attr($args['label_for']); ?>"
+            data-custom="<?= esc_attr($args['wporg_custom_data']); ?>"
+            name="wporg_options[<?= esc_attr($args['label_for']); ?>]"
+            value="<?php echo $options[$args['label_for']]; ?>"
+            placeholder="UA-00000000-1"
+    >
+     
+    <p class="description">
+        <?= esc_html('Ingresa el identificador único de Google Analytics.', 'wporg'); ?>
     </p>
     <?php
 }
