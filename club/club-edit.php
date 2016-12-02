@@ -22,22 +22,22 @@
 
         <tr class="user-last-name-wrap">
             <th><label>Nombre</label></th>
-            <td><input type="text" id="nombre" name="nombre" value="<?php echo $socio->nombre; ?>" /></td>
+            <td><input type="text" class="regular-text" id="nombre" name="nombre" value="<?php echo $socio->nombre; ?>" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
             <th><label>Apellido</label></th>
-            <td><input type="text" id="apellidos" name="apellidos" value="<?php echo $socio->apellidos; ?>" /></td>
+            <td><input type="text" class="regular-text" id="apellidos" name="apellidos" value="<?php echo $socio->apellidos; ?>" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
             <th><label>Correo</label></th>
-            <td><input type="text" id="correo" name="correo" value="<?php echo $socio->correo; ?>" /></td>
+            <td><input type="text" class="regular-text" id="correo" name="correo" value="<?php echo $socio->correo; ?>" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
             <th><label>Código</label></th>
-            <td><input type="text" id="codigo" name="codigo" value="<?php echo $socio->codigo; ?>" /></td>
+            <td><input type="text" class="regular-text" id="codigo" name="codigo" value="<?php echo $socio->codigo; ?>" /></td>
         </tr>
 
        
@@ -49,5 +49,5 @@
         </table>
         <input name="execute" value="update" type="hidden">
         <input name="user_id" value="<?php echo $socio->id; ?>" type="hidden">
-        <p class="submit"><input name="submit" id="submit" class="button button-primary" value="Actualizar" type="submit"></p>
+        <p class="submit"><input name="submit" id="submit" class="button button-primary" value="Actualizar" type="submit"> <a href="<?php echo admin_url('admin.php'.'?page=club_page') ?>" class="button">Cancelar</a></p>
         </form>

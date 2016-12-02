@@ -542,7 +542,7 @@ function clubEjecutaAcciones(){
 
             }
 
-            wp_redirect( admin_url('admin.php'.'?page=club_page&n=3') );
+            wp_redirect( admin_url('admin.php'.'?page=club_page&n=3&q='.count($ids)) );
 
 
         }
@@ -580,53 +580,7 @@ function club_render(){
      
     if(empty($action)){
 
-        //Create an instance of our package class...
-        $testListTable = new Club_List_Table();
-        //Fetch, prepare, sort, and filter our data...
-        $testListTable->prepare_items();
- 
-    ?>       
-        
-        <div id="icon-users" class="icon32"><br/></div>
-        <h2>Socios <a href="<?php echo admin_url('admin.php'.'?page=club_page&action=add') ?>" class="page-title-action">Añadir nuevo</a></h2>
-<?php if(isset($_REQUEST["n"]) && $_REQUEST["n"]==3){ ?>
-        <div id="message" class="updated notice is-dismissible"><p><?php $_REQUEST["q"] ?> socios han sido eliminados.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
-<?php } ?>
-        <form method="get">
-        <input type="hidden" value="<?php echo $_REQUEST["page"] ?>" name="page" />
-<?php 
-
-
-            $args = array(
-                        'post_type'  => 'page', 
-                        'post_parent'  => 0, 
-                        'posts_per_page' => -1,
-                        'orderby' => 'meta_value', 
-                        'meta_key' => 'año',
-                        'order'=>'DESC',
-                        'meta_query' => array(
-                                   array(
-                                    'key' => '_wp_page_template',
-                                    'value' => 'concurso.php'
-                                )
-                        )
-                );
-
-
-
-   ?>  
-        </form> 
-        <!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-        <form id="movies-filter" method="get" action="<?php echo admin_url('admin.php') ?>">
-  
-            <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-
-            <?php $testListTable->display(); ?>
-        </form>
-        
-
-    <?php
+       include("club-table.php");
 
     }else if($action=="edit"){
 
@@ -636,40 +590,21 @@ function club_render(){
 
        include("club-add.php");
 
+    }else if($action=="delete"){
+
+       include("club-delete.php");
+
     }else if($action=="-1" && $action2=="delete"){
 
-            global $wpdb;
+        if(isset($_REQUEST["socio"])){
+
+            include("club-deletebulk.php");
             
-            $sql = "SELECT id, apellidos, nombre
-                FROM wp_club_socios where id IN(".implode(',', $_REQUEST["socio"]).')';
+        }else{
 
+            include("club-table.php");
 
-            $socios = $wpdb->get_results($sql );
-
-
-            if(count($socios)){
-?>
-        <div id="icon-users" class="icon32"><br/></div>
-        <h2>Socios</h2>
-        <p>¿Deseas eliminar los siguientes registros?</p>
-
-<?php
-
-
-                echo '<ol>';
-
-                foreach($socios as $o){
-
-                    echo '<li>'.$o->nombre.'<input type="hidden" name="socio[]" value="'.$o->id.'" /></li>';
-                    //$wpdb->delete( 'wp_club_socios', array( 'id' => $o ));
-
-
-                }
-
-                echo '</ol><p> </p>';
-                echo '<a href="'.admin_url('admin.php'.'?page=club_page&execute=deletebulk&ids='.implode('.', $_REQUEST["socio"])).'" class="page-title-action">Eliminar registros</a>';
-            }
-
+        }
     }
     ?>
 

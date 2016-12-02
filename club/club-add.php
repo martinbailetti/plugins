@@ -31,5 +31,5 @@
 
         </table>
         <input name="execute" value="add" type="hidden">
-        <p class="submit"><input name="submit" id="submit" class="button button-primary" value="Agregar" type="submit"></p>
+        <p class="submit"><input name="submit" id="submit" class="button button-primary" value="Agregar" type="submit"> <a href="<?php echo admin_url('admin.php'.'?page=club_page') ?>" class="button">Cancelar</a></p>
         </form>
