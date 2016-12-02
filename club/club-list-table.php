@@ -505,7 +505,7 @@ add_action('admin_menu', 'clubAgregaMenu');
 
 function clubEjecutaAcciones(){
 
-    if(isset($_POST["execute"])){
+    if(isset($_REQUEST["execute"])){
 
         if(isset($_POST["user_id"]) && $_POST["execute"] == "update"){
 
@@ -526,6 +526,23 @@ function clubEjecutaAcciones(){
 
 
             wp_redirect( admin_url('admin.php'.'?page=club_page&n=1&action=edit&uid='.$id) );
+
+
+        }else if($_REQUEST["execute"] == "deletebulk"){
+          
+            global $wpdb;
+
+
+            $ids = explode(".", $_REQUEST["ids"]);
+
+            foreach($ids as $o){
+
+                $wpdb->delete( 'wp_club_socios', array( 'id' =>  $o));
+
+
+            }
+
+            wp_redirect( admin_url('admin.php'.'?page=club_page&n=3') );
 
 
         }
@@ -650,7 +667,7 @@ function club_render(){
                 }
 
                 echo '</ol><p> </p>';
-                echo '<a href="'.admin_url('admin.php'.'?page=club_page&execute=delete').'" class="page-title-action">Eliminar registros</a>';
+                echo '<a href="'.admin_url('admin.php'.'?page=club_page&execute=deletebulk&ids='.implode('.', $_REQUEST["socio"])).'" class="page-title-action">Eliminar registros</a>';
             }
 
     }
