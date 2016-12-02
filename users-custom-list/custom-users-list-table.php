@@ -483,55 +483,36 @@ class Custom_Users_List_Table extends WP_List_Table {
  * Now we just need to define an admin page. For this example, we'll add a top-level
  * menu item to the bottom of the admin menus.
  */
-function tt_add_menu_items(){
+function agregaMenu(){
     
     add_menu_page('Usuarios', 'Usuarios', 'activate_plugins', 'tt_list_test', 'tt_render_list_page','dashicons-universal-access-alt');
-} add_action('admin_menu', 'tt_add_menu_items');
+} 
+add_action('admin_menu', 'agregaMenu');
 
 
 
-function template_redirect(){
+function wpCargado(){
 
     if(isset($_POST["user_id"]) && isset($_POST["update"])){
 
 
-        if(isset($_POST["habilitado"])){
-
-            update_user_meta($_POST["user_id"], 'habilitado_'.$_POST["concurso_id"], 1);
-            update_user_meta($_POST["user_id"], 'fecha_habilitado_'.$_POST["concurso_id"], date("Y-m-d H:i:s") );
-
-
-        }else{
-
-            delete_user_meta( $_POST["user_id"], 'habilitado_'.$_POST["concurso_id"], 1);
-        }
-
-        if(isset($_POST["anecdota_seleccionada"])){
-            update_user_meta( $_POST["user_id"], 'anecdota_seleccionada_'.$_POST["concurso_id"], $_POST["anecdota_seleccionada"]);
-        }else{
-
-            delete_user_meta( $_POST["user_id"], 'anecdota_seleccionada_'.$_POST["concurso_id"]);
+        if(isset($_POST["first_name"]))
+            update_user_meta($_POST["user_id"], 'first_name', $_POST["first_name"]);
+        if(isset($_POST["last_name"]))
+            update_user_meta($_POST["user_id"], 'last_name', $_POST["last_name"]);
+        if(isset($_POST["user_email"]))
+            update_user_meta($_POST["user_id"], 'user_email', $_POST["user_email"]);
+        if(isset($_POST["code"]))
+            update_user_meta($_POST["user_id"], 'code', $_POST["code"]);
 
 
-        }
-     
 
-        if(isset($_POST["anecdota1_valor"])){
-            update_user_meta( $_POST["user_id"], 'anecdota1_valor_'.$_POST["concurso_id"], $_POST["anecdota1_valor"]);
-        }
-
-        if(isset($_POST["anecdota2_valor"])){
-            update_user_meta( $_POST["user_id"], 'anecdota2_valor_'.$_POST["concurso_id"], $_POST["anecdota2_valor"]);
-        }
-
-        if(isset($_POST["anecdota3_valor"])){
-            update_user_meta( $_POST["user_id"], 'anecdota3_valor_'.$_POST["concurso_id"], $_POST["anecdota3_valor"]);
-        }
-
-        wp_redirect( admin_url('admin.php'.'?action=edit&correo=1&participante='.$_POST["user_id"].'&page='.$_REQUEST["page"]."&con=".$_POST["concurso_id"]) );
+        wp_redirect( admin_url('admin.php'.'?page=tt_list_test&action=edit&uid='.$_POST["user_id"]) );
 
     }
-} add_action('wp_loaded', 'template_redirect');
+} 
+
+add_action('wp_loaded', 'wpCargado');
 
    
 
@@ -613,213 +594,11 @@ function tt_render_list_page(){
 
     }else if($action=="edit"){
 
-        $uid = $_REQUEST["uid"];
-
-
-        $user = get_user_by("ID", $uid);
-        $user_info = get_userdata($uid);
-    
-            
-    ?>
-        <form id="your-profile" action="" method="post" novalidate="novalidate" >
-        <h2>Editar Usuario</h2>
-
-        <table class="form-table">
-
-        <tr class="user-last-name-wrap">
-            <th><label>Nombre</label></th>
-            <td><input type="text" id="first_name" name="first_name" value="<?php echo $user_info->first_name; ?>" /></td>
-        </tr>
-
-        <tr class="user-last-name-wrap">
-            <th><label>Apellido</label></th>
-            <td><input type="text" id="last_name" name="last_name" value="<?php echo $user_info->last_name; ?>" /></td>
-        </tr>
-
-        <tr class="user-last-name-wrap">
-            <th><label>Correo</label></th>
-            <td><input type="text" id="user_email" name="user_email" value="<?php echo $user->user_email; ?>" /></td>
-        </tr>
-
-        <tr class="user-last-name-wrap">
-            <th><label>DNI</label></th>
-            <td><input type="text" id="code" name="code" value="<?php echo $user_info->code; ?>" /></td>
-        </tr>
-
-       
-        <tr class="user-last-name-wrap">
-            <th></th>
-            <td></td>
-        </tr>
-
-        </table>
-        <input name="update" value="update" type="hidden">
-        <input name="user_id" value="<?php echo $user->ID; ?>" type="hidden">
-        <p class="submit"><input name="submit" id="submit" class="button button-primary" value="Actualizar usuario" type="submit"></p>
-        </form>
-
-
-    <?php
+       include("custom-users-edit.php");
 
     }else if($action=="export"){
 
-        $orderby="m.meta_value";
-       $order="asc";
-
-        if(isset($_REQUEST["orderby"])) $orderby=$_REQUEST["orderby"];
-        if(isset($_REQUEST["order"])) $order=$_REQUEST["order"];
-
-        $sql = "SELECT u.ID, u.user_email, m.meta_value AS last_name, n.meta_value AS first_name, 
-            u.user_email, c.meta_value AS categoria_id, count(v.umeta_id) as validaciones, x.meta_value as habilitado, w.meta_value as documento_tipo, z.meta_value as documento_numero, y.meta_value as fecha_nacimiento, s.meta_value as sexo, tm.meta_value as telefono_movil, tc.meta_value as telefono_casa, to.meta_value as telefono_oficina,  t.meta_value as nacionalidad, 
-
-            CASE 
-            WHEN a.meta_value is not null THEN 'Deshabilitado'
-            WHEN g.meta_value is not null THEN 'Ganador'
-            WHEN b.meta_value is not null THEN 'Nominado'
-            WHEN f.meta_value is not null THEN 'Finalista'
-            WHEN h.meta_value is not null THEN 'Habilitado'
-            ELSE 'inscrito'
-            END as estado_nombre,
-
-            CASE 
-            WHEN a.meta_value is not null THEN 1
-            ELSE 0
-            END as ganador_absoluto,
-
-            DATE_FORMAT(i.meta_value,'%Y-%m-%d') as fecha_inscripcion, 
-            DATE_FORMAT(h.meta_value,'%Y-%m-%d') as fecha_habilitado, 
-            DATE_FORMAT(f.meta_value,'%Y-%m-%d') as fecha_finalista, 
-            DATE_FORMAT(b.meta_value,'%Y-%m-%d') as fecha_nominado, 
-            DATE_FORMAT(g.meta_value,'%Y-%m-%d') as fecha_ganador, 
-            DATE_FORMAT(a.meta_value,'%Y-%m-%d') as fecha_deshabilitado
-            FROM wp_users u
-            LEFT OUTER JOIN wp_usermeta v ON(v.user_id=u.ID AND v.meta_key='referencia_ok') 
-            LEFT OUTER JOIN wp_usermeta m ON(m.user_id=u.ID AND m.meta_key='last_name_$this->concurso_id') 
-            LEFT OUTER JOIN wp_usermeta n ON(n.user_id=u.ID AND n.meta_key='first_name_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta w ON(w.user_id=u.ID AND w.meta_key='documento_tipo_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta z ON(z.user_id=u.ID AND z.meta_key='documento_numero_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta y ON(y.user_id=u.ID AND y.meta_key='fecha_nacimiento_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta s ON(s.user_id=u.ID AND s.meta_key='sexo_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta tm ON(tm.user_id=u.ID AND tm.meta_key='telefono_movil_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta tc ON(tc.user_id=u.ID AND tc.meta_key='telefono_casa_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta to ON(to.user_id=u.ID AND to.meta_key='telefono_oficina_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta t ON(t.user_id=u.ID AND t.meta_key='nacionalidad_$this->concurso_id')
-            LEFT OUTER JOIN wp_usermeta x ON(x.user_id=u.ID AND x.meta_key='habilitado_$this->concurso_id') 
-            INNER JOIN wp_usermeta o ON(o.user_id=u.ID AND o.meta_key='concurso_id')
-            INNER JOIN wp_usermeta c ON(c.user_id=u.ID AND c.meta_key='categoria_id_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta e ON(e.user_id=u.ID AND e.meta_key='estado_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta i ON(i.user_id=u.ID AND i.meta_key='fecha_inscripcion_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta h ON(h.user_id=u.ID AND h.meta_key='fecha_habilitado_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta d ON(d.user_id=u.ID AND d.meta_key='fecha_deshabilitado_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta f ON(f.user_id=u.ID AND f.meta_key='fecha_finalista_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta b ON(b.user_id=u.ID AND b.meta_key='fecha_nominado_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta g ON(g.user_id=u.ID AND g.meta_key='fecha_ganador_".$this->concurso_id."')
-            LEFT OUTER JOIN wp_usermeta a ON(a.user_id=u.ID AND a.meta_key='fecha_ganador_absoluto_".$this->concurso_id."')";
-
-        $sql .= " where o.meta_value=".$this->concurso_id;
      
-
-
-
-        if($this->categoria_id != ""){
-
-            $sql .= " and c.meta_value=".$this->categoria_id;
-
-        }
-
-
-        $sql .= " group by u.ID, m.meta_value, n.meta_value, 
-            u.user_email, c.meta_value, a.meta_value, g.meta_value, b.meta_value, f.meta_value, h.meta_value, i.meta_value, h.meta_value, f.meta_value, b.meta_value, g.meta_value, a.meta_value";
-
-        if($orderby != "" && $order!=""){
-
-            $sql .= " order by ".$orderby." ".$order;
-
-        }
-
-        $usrs = $wpdb->get_results($sql);
-
-        $filename = "reporte_".date("Y-m-d-H-i") ;
-        $file_ending = "xls";
-        header("Content-Type: application/xls; charset=utf-8");    
-        header("Content-Disposition: attachment; filename=$filename.xls");  
-        header("Pragma: no-cache"); 
-        header("Expires: 0");
-      //define separator (defines columns in excel & tabs in word)
-        $sep = "\t"; //tabbed character
-        //start of printing column names as names of MySQL fields
-        echo "Nombre".$sep;
-        echo "Apellidos".$sep;
-        echo "Tipo de Documento".$sep;
-        echo "Número de Documento".$sep;
-        echo "Fecha de Nacimiento".$sep;
-        echo "Sexo";
-        echo "\n";    
-
-
-        foreach ( $usrs as $u ) {
-
-
-            echo $u->first_name.$sep;
-            echo $u->last_name.$sep;
-            echo $u->documento_tipo.$sep;
-            echo $u->documento_numero.$sep;
-            echo $u->fecha_nacimiento.$sep;
-            echo $u->sexo;
-            echo "\n";   
-          
-        }
-
-/*
-
-   $filename = "excelfilename";    
-
-    $file_ending = "xls";
-    //header info for browser
-    header("Content-Type: application/xls; charset=utf-8");    
-    header("Content-Disposition: attachment; filename=$filename.xls");  
-    header("Pragma: no-cache"); 
-    header("Expires: 0");
-
- 
-    //define separator (defines columns in excel & tabs in word)
-    $sep = "\t"; //tabbed character
-    //start of printing column names as names of MySQL fields
-    echo utf8_decode("Nombre").$sep;
-    echo "Apellidos".$sep;
-    echo "Correo".$sep;
-    echo "Curriculum Vitae".$sep;
-    echo "Tipo de Documento".$sep;
-    echo "Documento".$sep;
-    echo utf8_decode("Teléfono Fijo").$sep;
-    echo utf8_decode("Teléfono Celular").$sep;
-    echo "Registrado".$sep;
-    echo utf8_decode("País");
-    echo "\n";    
-
-
-
-    $list = JobApplicant::getList($_SESSION["langID"]);
-
-
-    foreach ($list as $o) {
-    
-        echo utf8_decode($o->applicantName).$sep;
-        echo utf8_decode($o->applicantLastName).$sep;
-        echo utf8_decode($o->applicantEmail).$sep;
-        echo utf8_decode($URL_ROOT."cvs/".$o->applicantFile).$sep;
-        echo utf8_decode($o->applicantDocumentType).$sep;
-        echo utf8_decode($o->applicantDocumentID).$sep;
-        echo utf8_decode($o->applicantPhone).$sep;
-        echo utf8_decode($o->applicantPhoneMobile).$sep;
-        echo utf8_decode($o->register).$sep;
-        echo utf8_decode($o->langName);
-
-        echo "\n";
-
-
-    }
-*/
 
     }
     ?>
