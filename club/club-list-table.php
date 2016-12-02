@@ -233,7 +233,7 @@ class Club_List_Table extends WP_List_Table {
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
             /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
-            /*$2%s*/ $item['ID']                //The value of the checkbox should be the record's id
+            /*$2%s*/ $item['id']                //The value of the checkbox should be the record's id
         );
     }
 
@@ -320,12 +320,19 @@ class Club_List_Table extends WP_List_Table {
      * @see $this->prepare_items()
      **************************************************************************/
     function process_bulk_action() {
-        
+
+        //Crear pantalla de Confirmación de cambios y luego una action para bulk
+
         //Detect when a bulk action is being triggered...
-        if( 'delete'===$this->current_action() ) {
-            wp_die('Items deleted (or they would be if we had items to delete)!');
+        if( isset($_REQUEST["action2"]) && $_REQUEST["action2"] == "delete" ) {
+            global $wpdb;
+            $socios = $_REQUEST["socio"];
+            foreach($socios as $o){
+
+                $wpdb->delete( 'wp_club_socios', array( 'id' => $o ));
+
+            }
         }
-        
     }
 
 
@@ -543,7 +550,7 @@ function tt_render_list_page(){
 
     <?php  
      
-    if(empty($action)){
+    if(empty($action) || $action==-1){
 
         //Create an instance of our package class...
         $testListTable = new Club_List_Table();
@@ -554,6 +561,9 @@ function tt_render_list_page(){
         
         <div id="icon-users" class="icon32"><br/></div>
         <h2>Socios <a href="<?php echo admin_url('admin.php'.'?page=tt_list_test&action=add') ?>" class="page-title-action">Añadir nuevo</a></h2>
+<?php if(isset($_REQUEST["n"]) && $_REQUEST["n"]==3){ ?>
+        <div id="message" class="updated notice is-dismissible"><p><?php $_REQUEST["q"] ?> socios han sido eliminados.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
+<?php } ?>
         <form method="get">
         <input type="hidden" value="<?php echo $_REQUEST["page"] ?>" name="page" />
 <?php 
@@ -579,11 +589,10 @@ function tt_render_list_page(){
    ?>  
         </form> 
         <!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-        <form id="movies-filter" method="get">
+        <form id="movies-filter" method="get" action="<?php echo admin_url('admin.php') ?>">
+  
             <!-- For plugins, we also need to ensure that the form posts back to our current page -->
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
-            <!-- Now we can render the completed list table -->
-    
 
             <?php $testListTable->display(); ?>
         </form>
