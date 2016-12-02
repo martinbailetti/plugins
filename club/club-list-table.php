@@ -327,10 +327,20 @@ class Club_List_Table extends WP_List_Table {
         if( isset($_REQUEST["action2"]) && $_REQUEST["action2"] == "delete" ) {
             global $wpdb;
             $socios = $_REQUEST["socio"];
-            foreach($socios as $o){
+            if(count($socios)){
 
-                $wpdb->delete( 'wp_club_socios', array( 'id' => $o ));
+                echo '<ul>';
 
+                foreach($socios as $o){
+
+                    echo '<li>'.$o.'<input type="hidden" name="socio[]" value="'.$o.'" /></li>';
+                    //$wpdb->delete( 'wp_club_socios', array( 'id' => $o ));
+
+
+                }
+
+                echo '</ul>';
+                echo '<a href="'.admin_url('admin.php'.'?page=club_page&action=add').'" class="page-title-action">Eliminar registros</a>';
             }
         }
     }
@@ -485,15 +495,15 @@ class Club_List_Table extends WP_List_Table {
  * Now we just need to define an admin page. For this example, we'll add a top-level
  * menu item to the bottom of the admin menus.
  */
-function agregaMenu(){
+function clubAgregaMenu(){
     
-    add_menu_page('Socios', 'Socios', 'activate_plugins', 'tt_list_test', 'tt_render_list_page','dashicons-universal-access-alt');
+    add_menu_page('Socios', 'Socios', 'activate_plugins', 'club_page', 'club_render','dashicons-universal-access-alt');
 } 
-add_action('admin_menu', 'agregaMenu');
+add_action('admin_menu', 'clubAgregaMenu');
 
 
 
-function ejecutaAcciones(){
+function clubEjecutaAcciones(){
 
     if(isset($_POST["execute"])){
 
@@ -503,7 +513,7 @@ function ejecutaAcciones(){
 
             $wpdb->update( 'wp_club_socios', array( 'apellidos' => $_POST["apellidos"], 'nombre' => $_POST["nombre"], 'correo' => $_POST["correo"], 'codigo' => $_POST["codigo"], 'estado' => $_POST["estado"] ), array( 'id' => $_POST["user_id"] )); 
 
-            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&n=2&action=edit&uid='.$_POST["user_id"]) );
+            wp_redirect( admin_url('admin.php'.'?page=club_page&n=2&action=edit&uid='.$_POST["user_id"]) );
 
         }else if($_POST["execute"] == "add"){
 
@@ -515,7 +525,7 @@ function ejecutaAcciones(){
             $id = $wpdb->insert_id;
 
 
-            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&n=1&action=edit&uid='.$id) );
+            wp_redirect( admin_url('admin.php'.'?page=club_page&n=1&action=edit&uid='.$id) );
 
 
         }
@@ -523,7 +533,7 @@ function ejecutaAcciones(){
     }
 } 
 
-add_action('wp_loaded', 'ejecutaAcciones');
+add_action('wp_loaded', 'clubEjecutaAcciones');
 
    
 
@@ -538,10 +548,11 @@ add_action('wp_loaded', 'ejecutaAcciones');
  * so we've instead called those methods explicitly. It keeps things flexible, and
  * it's the way the list tables are used in the WordPress core.
  */
-function tt_render_list_page(){
+function club_render(){
     
 
     $action = $_REQUEST["action"];
+    $action2 = $_REQUEST["action2"];
 
 
     ?> 
@@ -550,7 +561,7 @@ function tt_render_list_page(){
 
     <?php  
      
-    if(empty($action) || $action==-1){
+    if(empty($action)){
 
         //Create an instance of our package class...
         $testListTable = new Club_List_Table();
@@ -560,7 +571,7 @@ function tt_render_list_page(){
     ?>       
         
         <div id="icon-users" class="icon32"><br/></div>
-        <h2>Socios <a href="<?php echo admin_url('admin.php'.'?page=tt_list_test&action=add') ?>" class="page-title-action">Añadir nuevo</a></h2>
+        <h2>Socios <a href="<?php echo admin_url('admin.php'.'?page=club_page&action=add') ?>" class="page-title-action">Añadir nuevo</a></h2>
 <?php if(isset($_REQUEST["n"]) && $_REQUEST["n"]==3){ ?>
         <div id="message" class="updated notice is-dismissible"><p><?php $_REQUEST["q"] ?> socios han sido eliminados.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
 <?php } ?>
@@ -608,16 +619,45 @@ function tt_render_list_page(){
 
        include("club-add.php");
 
+    }else if($action=="-1" && $action2=="delete"){
+
+            global $wpdb;
+            
+            $sql = "SELECT id, apellidos, nombre
+                FROM wp_club_socios where id IN(".implode(',', $_REQUEST["socio"]).')';
+
+
+            $socios = $wpdb->get_results($sql );
+
+
+            if(count($socios)){
+?>
+        <div id="icon-users" class="icon32"><br/></div>
+        <h2>Socios</h2>
+        <p>¿Deseas eliminar los siguientes registros?</p>
+
+<?php
+
+
+                echo '<ol>';
+
+                foreach($socios as $o){
+
+                    echo '<li>'.$o->nombre.'<input type="hidden" name="socio[]" value="'.$o->id.'" /></li>';
+                    //$wpdb->delete( 'wp_club_socios', array( 'id' => $o ));
+
+
+                }
+
+                echo '</ol><p> </p>';
+                echo '<a href="'.admin_url('admin.php'.'?page=club_page&execute=delete').'" class="page-title-action">Eliminar registros</a>';
+            }
+
     }
     ?>
 
+        
     </div>
     <?php
 }
 
-
-function tt_render_form_page(){
-
-
-
-}

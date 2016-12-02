@@ -36,7 +36,7 @@
         </tr>
 
         <tr class="user-last-name-wrap">
-            <th><label>DNI</label></th>
+            <th><label>Código</label></th>
             <td><input type="text" id="codigo" name="codigo" value="<?php echo $socio->codigo; ?>" /></td>
         </tr>
 
