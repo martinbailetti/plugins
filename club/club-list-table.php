@@ -496,7 +496,7 @@ function ejecutaAcciones(){
 
             $wpdb->update( 'wp_club_socios', array( 'apellidos' => $_POST["apellidos"], 'nombre' => $_POST["nombre"], 'correo' => $_POST["correo"], 'codigo' => $_POST["codigo"], 'estado' => $_POST["estado"] ), array( 'id' => $_POST["user_id"] )); 
 
-            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&action=edit&uid='.$_POST["user_id"]) );
+            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&n=2&action=edit&uid='.$_POST["user_id"]) );
 
         }else if($_POST["execute"] == "add"){
 
@@ -508,7 +508,7 @@ function ejecutaAcciones(){
             $id = $wpdb->insert_id;
 
 
-            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&action=edit&uid='.$id) );
+            wp_redirect( admin_url('admin.php'.'?page=tt_list_test&n=1&action=edit&uid='.$id) );
 
 
         }

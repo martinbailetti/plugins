@@ -1,7 +1,6 @@
 
         <form id="your-profile" action="" method="post" novalidate="novalidate" >
         <h2>Agregar Socio</h2>
-
         <table class="form-table">
 
         <tr class="user-last-name-wrap">

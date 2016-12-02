@@ -2,7 +2,6 @@
 
         global $wpdb;
         $uid = $_REQUEST["uid"];
-
         
         $sql = "SELECT id, apellidos, nombre, correo, codigo, estado
             FROM wp_club_socios where id=$uid";
@@ -12,6 +11,12 @@
 ?>
         <form id="your-profile" action="" method="post" novalidate="novalidate" >
         <h2>Editar Usuario</h2>
+<?php if(isset($_REQUEST["n"]) && $_REQUEST["n"]==1){ ?>
+        <div id="message" class="updated notice is-dismissible"><p>Nuevo socio agregado.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
+<?php } ?>
+<?php if(isset($_REQUEST["n"]) && $_REQUEST["n"]==2){ ?>
+        <div id="message" class="updated notice is-dismissible"><p>Los datos han sido actualizados.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
+<?php } ?>
 
         <table class="form-table">
 
