@@ -7,6 +7,21 @@ Author: MB
 Author URI: http://hbt.io/
 */
 
+/*
+ * Verifica si existe el ACF   
+ */
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+if ( !is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+  add_action( 'admin_notices', 'my_acf_notice' );
+}
+
+
+function my_acf_notice() {
+  ?>
+<div id="message" class="updated notice is-dismissible"><p>Admin Configurator requiere la instalación del plugin <strong>Advanced Custom Fields</strong>.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
+  <?php
+}
 /**
  * Include Scripts for Admin
  */
