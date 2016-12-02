@@ -1,25 +1,25 @@
 
-        <form id="your-profile" action="" method="post" novalidate="novalidate" >
+        <form id="club-edit-form" action="" method="post" novalidate="novalidate" >
         <h2>Agregar Socio</h2>
         <table class="form-table">
 
         <tr class="user-last-name-wrap">
-            <th><label>Nombre</label></th>
+            <th><label for="nombre">Nombre *</label></th>
             <td><input type="text" id="nombre" name="nombre" value="" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
-            <th><label>Apellido</label></th>
+            <th><label for="apellidos">Apellidos *</label></th>
             <td><input type="text" id="apellidos" name="apellidos" value="" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
-            <th><label>Correo</label></th>
+            <th><label for="correo">Correo *</label></th>
             <td><input type="text" id="correo" name="correo" value="" /></td>
         </tr>
 
         <tr class="user-last-name-wrap">
-            <th><label>Código</label></th>
+            <th><label for="codigo">Código *</label></th>
             <td><input type="text" id="codigo" name="codigo" value="" /></td>
         </tr>
 

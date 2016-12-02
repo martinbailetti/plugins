@@ -9,6 +9,25 @@ Author URI: http://www.mattvanandel.com
 License: GPL2
 */
 
+/**
+ * Include Scripts for Admin
+ */
+function club_admin_scripts() {
+
+
+    //Estilo del administrador
+    wp_enqueue_style( 'admin-club-styles',  plugin_dir_url( __FILE__ ) . 'css/club.css' );
+    //Scripts para el administrador
+    wp_enqueue_script('admin-club-script', plugin_dir_url( __FILE__ ) . 'js/club.js', array('jquery'), false, true);
+    $data = array( 'site_url' => __( site_url() ) );
+    wp_localize_script( 'admin-club-script', 'WP_OBJECT', $data );
+
+}
+add_action( 'admin_enqueue_scripts', 'club_admin_scripts' );
+
+/**
+ * Crea BD en activación
+ */
 require_once("club-db.php");
 register_activation_hook( __FILE__, 'club_install' );
 //register_activation_hook( __FILE__, 'jal_install_data' );
@@ -574,7 +593,7 @@ function club_render(){
 
     ?> 
 
-    <div class="wrap">
+    <div class="wrap" id="club-container">
 
     <?php  
      
@@ -599,7 +618,7 @@ function club_render(){
         if(isset($_REQUEST["socio"])){
 
             include("club-deletebulk.php");
-            
+
         }else{
 
             include("club-table.php");
