@@ -218,8 +218,8 @@ class Club_List_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&action=%s&uid=%s">Edit</a>',$_REQUEST['page'],'edit',$item['id']),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&uid=%s">Delete</a>',$_REQUEST['page'],'delete',$item['id']),
+            'edit'      => sprintf('<a href="?page=%s&action=%s&uid=%s">Edit</a>',$_REQUEST['page'],'edita',$item['id']),
+            'delete'    => sprintf('<a href="?page=%s&action=%s&uid=%s">Delete</a>',$_REQUEST['page'],'elimina',$item['id']),
         );
         
         //Return the title contents
