@@ -9,7 +9,12 @@ Author URI: http://www.inthewok.com/
 License: GPL2
 */
 
-
+function my_cpt_columns( $columns ) {
+    $columns["metabox"] = "Metabox";
+    return $columns;
+}
+add_filter('manage_edit-portfolio_columns', 'my_cpt_columns');
+//that's all that's needed!
 
 add_action( 'init', 'productos_create_post_type' );
 
@@ -87,3 +92,44 @@ function producto_acf_notice() {
   <?php
 }
 
+/*
+Modifica el Listado de Productos
+*/
+
+function producto_columns($columns)
+{
+	$columns = array(
+		'cb'	 	=> '<input type="checkbox" />',
+		'title' 	=> 'Title',
+		'producto_precio'	=>	'Precio',
+		'producto_codigo' 	=> 'Código',
+		'date'		=>	'Date'
+	);
+	return $columns;
+}
+
+function producto_custom_columns($column)
+{
+	global $post;
+	echo $post->ID;
+
+	if($column == 'producto_precio')
+	{
+		echo  get_field('producto_precio', $post->ID);
+	}else if($column == 'producto_codigo')
+	{
+		echo  get_field('producto_codigo', $post->ID);
+	}
+}
+
+add_action("manage_pages_custom_column", "producto_custom_columns");
+add_filter("manage_edit-producto_columns", "producto_columns");
+
+function producto_register_sortable( $columns )
+{
+	$columns['producto_precio'] = 'producto_precio';
+	$columns['producto_codigo'] = 'producto_codigo';
+	return $columns;
+}
+
+add_filter("manage_edit-producto_sortable_columns", "producto_register_sortable" );
