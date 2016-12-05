@@ -133,7 +133,11 @@ function slider_html($sliderID){
       if(!empty($slides[$i]["enlace"]))
         echo '<a href="'.$slides[$i]["enlace"].'">';
 
-      echo '<img src="'.$slides[$i]["imagen"].'" alt="" title="#slide'.$i.'" '.(($slides[$i]["efecto"]!=0)?'data-transition="'.$slides[$i]["efecto"].'"':'').' />';  
+      $e = "";
+      if($slides[$i]["efecto"]!="ninguno")
+        $e = ' data-transition="'.$slides[$i]["efecto"].'"';
+
+      echo '<img src="'.$slides[$i]["imagen"].'" alt="" title="#slide'.$i.'" '.$e.' />';  
 
       if(!empty($slides[$i]["enlace"]))
         echo '</a>'; 
