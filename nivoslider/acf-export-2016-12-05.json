@@ -500,7 +500,7 @@
                             "id": ""
                         },
                         "choices": {
-                            "0": "Sin Definir",
+                            "ninguno": "Sin Definir",
                             "sliceDown": "Slice Down",
                             "sliceDownLeft": "Slice Down Left",
                             "sliceUp": "Slice Up",
@@ -518,9 +518,9 @@
                             "boxRainGrow": "Box Rain Grow",
                             "boxRainGrowReverse": "Box Rain Grow Reverse"
                         },
-                        "default_value": [
-                            0
-                        ],
+                        "default_value": {
+                            "ninguno": "ninguno"
+                        },
                         "allow_null": 0,
                         "multiple": 0,
                         "ui": 0,

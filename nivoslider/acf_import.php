@@ -503,7 +503,7 @@ acf_add_local_field_group(array (
 						'id' => '',
 					),
 					'choices' => array (
-						0 => 'Sin Definir',
+						'ninguno' => 'Sin Definir',
 						'sliceDown' => 'Slice Down',
 						'sliceDownLeft' => 'Slice Down Left',
 						'sliceUp' => 'Slice Up',
@@ -522,7 +522,7 @@ acf_add_local_field_group(array (
 						'boxRainGrowReverse' => 'Box Rain Grow Reverse',
 					),
 					'default_value' => array (
-						0 => 0,
+						'ninguno' => 'ninguno',
 					),
 					'allow_null' => 0,
 					'multiple' => 0,
