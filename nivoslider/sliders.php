@@ -63,7 +63,7 @@ if ( !is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 
 
 	//Importa la configuración ACF
-	//include_once("acf_import.php");
+	include_once("acf_import.php");
 
 }
 
@@ -121,7 +121,7 @@ function slider_js($sliderID){
 function slider_html($sliderID){
   
   $slides = get_field("slider_slides", $sliderID);
-
+  
   if(count($slides)>0){
 
 

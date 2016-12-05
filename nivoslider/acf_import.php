@@ -1,9 +1,10 @@
 <?php
+
 if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array (
 	'key' => 'group_58449e0767d64',
-	'title' => 'Slider',
+	'title' => 'Configuración General',
 	'fields' => array (
 		array (
 			'key' => 'field_5844f3e7f79c1',
@@ -39,7 +40,7 @@ acf_add_local_field_group(array (
 			'key' => 'field_58449e1073c94',
 			'label' => 'Efectos',
 			'name' => 'slider_effect',
-			'type' => 'select',
+			'type' => 'checkbox',
 			'instructions' => '',
 			'required' => 1,
 			'conditional_logic' => 0,
@@ -69,14 +70,35 @@ acf_add_local_field_group(array (
 			'default_value' => array (
 				'random' => 'random',
 			),
-			'allow_null' => 0,
-			'multiple' => 1,
-			'ui' => 0,
-			'ajax' => 0,
-			'placeholder' => '',
-			'disabled' => 0,
-			'readonly' => 0,
+			'layout' => 'horizontal',
+			'toggle' => 0,
 		),
+	),
+	'location' => array (
+		array (
+			array (
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'slider',
+			),
+		),
+	),
+	'menu_order' => 1,
+	'position' => 'acf_after_title',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+	'hide_on_screen' => array (
+		0 => 'the_content',
+	),
+	'active' => 1,
+	'description' => '',
+));
+
+acf_add_local_field_group(array (
+	'key' => 'group_58450f2757719',
+	'title' => 'Configuración Avanzada',
+	'fields' => array (
 		array (
 			'key' => 'field_5844a08ea37d1',
 			'label' => 'Slices',
@@ -86,7 +108,7 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 20,
 				'class' => '',
 				'id' => '',
 			),
@@ -109,7 +131,7 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 20,
 				'class' => '',
 				'id' => '',
 			),
@@ -132,7 +154,7 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 20,
 				'class' => '',
 				'id' => '',
 			),
@@ -155,7 +177,7 @@ acf_add_local_field_group(array (
 			'required' => 1,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 20,
 				'class' => '',
 				'id' => '',
 			),
@@ -178,7 +200,7 @@ acf_add_local_field_group(array (
 			'required' => 1,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 20,
 				'class' => '',
 				'id' => '',
 			),
@@ -201,7 +223,7 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 16,
 				'class' => '',
 				'id' => '',
 			),
@@ -210,14 +232,14 @@ acf_add_local_field_group(array (
 		),
 		array (
 			'key' => 'field_5844a3a77a6de',
-			'label' => 'Show navigation Controls',
+			'label' => 'Show Controls',
 			'name' => 'slider_controlNav',
 			'type' => 'true_false',
 			'instructions' => '',
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 16,
 				'class' => '',
 				'id' => '',
 			),
@@ -226,14 +248,14 @@ acf_add_local_field_group(array (
 		),
 		array (
 			'key' => 'field_5844a3d47a6df',
-			'label' => 'Use Thumbnails for Navigation',
+			'label' => 'Use Thumbnails',
 			'name' => 'slider_controlNavThumbs',
 			'type' => 'true_false',
 			'instructions' => '',
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 16,
 				'class' => '',
 				'id' => '',
 			),
@@ -249,7 +271,7 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 16,
 				'class' => '',
 				'id' => '',
 			),
@@ -265,7 +287,23 @@ acf_add_local_field_group(array (
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 16,
+				'class' => '',
+				'id' => '',
+			),
+			'message' => '',
+			'default_value' => 0,
+		),
+		array (
+			'key' => 'field_5844a661ec057',
+			'label' => 'Inicio Aleatorio',
+			'name' => 'randomStart',
+			'type' => 'true_false',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => 16,
 				'class' => '',
 				'id' => '',
 			),
@@ -281,7 +319,7 @@ acf_add_local_field_group(array (
 			'required' => 1,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 33,
 				'class' => '',
 				'id' => '',
 			),
@@ -302,7 +340,7 @@ acf_add_local_field_group(array (
 			'required' => 1,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 33,
 				'class' => '',
 				'id' => '',
 			),
@@ -315,22 +353,6 @@ acf_add_local_field_group(array (
 			'disabled' => 0,
 		),
 		array (
-			'key' => 'field_5844a661ec057',
-			'label' => 'Inicio Aleatorio',
-			'name' => 'randomStart',
-			'type' => 'true_false',
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => 0,
-			'wrapper' => array (
-				'width' => '',
-				'class' => '',
-				'id' => '',
-			),
-			'message' => '',
-			'default_value' => 0,
-		),
-		array (
 			'key' => 'field_5844e233faafa',
 			'label' => 'Etiqueta HTML para título',
 			'name' => 'slider_titleTag',
@@ -339,7 +361,7 @@ acf_add_local_field_group(array (
 			'required' => 1,
 			'conditional_logic' => 0,
 			'wrapper' => array (
-				'width' => '',
+				'width' => 33,
 				'class' => '',
 				'id' => '',
 			),
@@ -370,21 +392,19 @@ acf_add_local_field_group(array (
 			),
 		),
 	),
-	'menu_order' => 0,
+	'menu_order' => 3,
 	'position' => 'acf_after_title',
-	'style' => 'seamless',
-	'label_placement' => 'left',
+	'style' => 'default',
+	'label_placement' => 'top',
 	'instruction_placement' => 'label',
-	'hide_on_screen' => array (
-		0 => 'the_content',
-	),
+	'hide_on_screen' => '',
 	'active' => 1,
 	'description' => '',
 ));
 
 acf_add_local_field_group(array (
 	'key' => 'group_5844beb6c2a42',
-	'title' => 'Slides',
+	'title' => 'Agrega, modifica y elimina tus slides',
 	'fields' => array (
 		array (
 			'key' => 'field_5844beb7310d1',
@@ -544,7 +564,7 @@ acf_add_local_field_group(array (
 			),
 		),
 	),
-	'menu_order' => 2,
+	'menu_order' => 5,
 	'position' => 'acf_after_title',
 	'style' => 'default',
 	'label_placement' => 'top',

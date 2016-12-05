@@ -1,7 +1,7 @@
 [
     {
         "key": "group_58449e0767d64",
-        "title": "Slider",
+        "title": "Configuraci\u00f3n General",
         "fields": [
             {
                 "key": "field_5844f3e7f79c1",
@@ -37,7 +37,7 @@
                 "key": "field_58449e1073c94",
                 "label": "Efectos",
                 "name": "slider_effect",
-                "type": "select",
+                "type": "checkbox",
                 "instructions": "",
                 "required": 1,
                 "conditional_logic": 0,
@@ -67,14 +67,34 @@
                 "default_value": {
                     "random": "random"
                 },
-                "allow_null": 0,
-                "multiple": 1,
-                "ui": 0,
-                "ajax": 0,
-                "placeholder": "",
-                "disabled": 0,
-                "readonly": 0
-            },
+                "layout": "horizontal",
+                "toggle": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "slider"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "acf_after_title",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": [
+            "the_content"
+        ],
+        "active": 1,
+        "description": ""
+    },
+    {
+        "key": "group_58450f2757719",
+        "title": "Configuraci\u00f3n Avanzada",
+        "fields": [
             {
                 "key": "field_5844a08ea37d1",
                 "label": "Slices",
@@ -84,7 +104,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 20,
                     "class": "",
                     "id": ""
                 },
@@ -107,7 +127,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 20,
                     "class": "",
                     "id": ""
                 },
@@ -130,7 +150,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 20,
                     "class": "",
                     "id": ""
                 },
@@ -153,7 +173,7 @@
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 20,
                     "class": "",
                     "id": ""
                 },
@@ -176,7 +196,7 @@
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 20,
                     "class": "",
                     "id": ""
                 },
@@ -199,7 +219,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 16,
                     "class": "",
                     "id": ""
                 },
@@ -208,14 +228,14 @@
             },
             {
                 "key": "field_5844a3a77a6de",
-                "label": "Show navigation Controls",
+                "label": "Show Controls",
                 "name": "slider_controlNav",
                 "type": "true_false",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 16,
                     "class": "",
                     "id": ""
                 },
@@ -224,14 +244,14 @@
             },
             {
                 "key": "field_5844a3d47a6df",
-                "label": "Use Thumbnails for Navigation",
+                "label": "Use Thumbnails",
                 "name": "slider_controlNavThumbs",
                 "type": "true_false",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 16,
                     "class": "",
                     "id": ""
                 },
@@ -247,7 +267,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 16,
                     "class": "",
                     "id": ""
                 },
@@ -263,7 +283,23 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 16,
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0
+            },
+            {
+                "key": "field_5844a661ec057",
+                "label": "Inicio Aleatorio",
+                "name": "randomStart",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": 16,
                     "class": "",
                     "id": ""
                 },
@@ -279,7 +315,7 @@
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 33,
                     "class": "",
                     "id": ""
                 },
@@ -300,7 +336,7 @@
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 33,
                     "class": "",
                     "id": ""
                 },
@@ -313,22 +349,6 @@
                 "disabled": 0
             },
             {
-                "key": "field_5844a661ec057",
-                "label": "Inicio Aleatorio",
-                "name": "randomStart",
-                "type": "true_false",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 0
-            },
-            {
                 "key": "field_5844e233faafa",
                 "label": "Etiqueta HTML para t\u00edtulo",
                 "name": "slider_titleTag",
@@ -337,7 +357,7 @@
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 33,
                     "class": "",
                     "id": ""
                 },
@@ -368,20 +388,18 @@
                 }
             ]
         ],
-        "menu_order": 0,
+        "menu_order": 3,
         "position": "acf_after_title",
-        "style": "seamless",
-        "label_placement": "left",
+        "style": "default",
+        "label_placement": "top",
         "instruction_placement": "label",
-        "hide_on_screen": [
-            "the_content"
-        ],
+        "hide_on_screen": "",
         "active": 1,
         "description": ""
     },
     {
         "key": "group_5844beb6c2a42",
-        "title": "Slides",
+        "title": "Agrega, modifica y elimina tus slides",
         "fields": [
             {
                 "key": "field_5844beb7310d1",
@@ -541,7 +559,7 @@
                 }
             ]
         ],
-        "menu_order": 2,
+        "menu_order": 5,
         "position": "acf_after_title",
         "style": "default",
         "label_placement": "top",
