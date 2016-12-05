@@ -103,7 +103,6 @@ function producto_columns($columns)
 function producto_custom_columns($column)
 {
 	global $post;
-	echo $post->ID;
 
 	if($column == 'producto_precio')
 	{
