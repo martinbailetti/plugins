@@ -14,6 +14,11 @@ License: GPL2
  
       wp_enqueue_style( 'slider-style', plugin_dir_url( __FILE__ ).'nivo-slider.css');
 
+      wp_enqueue_style( 'slider-bar-style', plugin_dir_url( __FILE__ ).'themes/bar/bar.css');
+      wp_enqueue_style( 'slider-dark-style', plugin_dir_url( __FILE__ ).'themes/dark/dark.css');
+      wp_enqueue_style( 'slider-default-style', plugin_dir_url( __FILE__ ).'themes/default/default.css');
+      wp_enqueue_style( 'slider-light-style', plugin_dir_url( __FILE__ ).'themes/light/light.css');
+
       wp_enqueue_script('slider-script', plugin_dir_url( __FILE__ ) .'jquery.nivo.slider.pack.js', array('jquery'), '', true);
   }
 
@@ -116,10 +121,11 @@ function slider_js($sliderID){
 function slider_html($sliderID){
   
   $slides = get_field("slider_slides", $sliderID);
-
+  
   if(count($slides)>0){
 
 
+    echo '<div class="theme-'.get_field("slider_template", $sliderID).'">'; 
     echo '<div id="slider" class="nivoSlider">'; 
      
     for($i=0; $i < count($slides); $i++){
@@ -134,6 +140,7 @@ function slider_html($sliderID){
 
     }
 
+    echo '</div>';
     echo '</div>';
   }
 
