@@ -9,16 +9,8 @@ Author URI: http://www.inthewok.com/
 License: GPL2
 */
 
-function my_cpt_columns( $columns ) {
-    $columns["metabox"] = "Metabox";
-    return $columns;
-}
-add_filter('manage_edit-portfolio_columns', 'my_cpt_columns');
-//that's all that's needed!
 
 add_action( 'init', 'productos_create_post_type' );
-
-
 function productos_create_post_type() {
   register_post_type( 'producto',
     array(
