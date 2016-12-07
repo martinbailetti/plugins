@@ -16,10 +16,10 @@ License: GPL2
 
       wp_enqueue_script('scrollto-script', plugin_dir_url( __FILE__ ) .'js/jquery.scrollTo-1.4.2-min.js', array('jquery'), '', true);
       wp_enqueue_script('localscroll-script', plugin_dir_url( __FILE__ ) .'js/jquery.localscroll-1.2.7-min.js', array('jquery'), '', true);
-      wp_enqueue_script('parallax-script', plugin_dir_url( __FILE__ ) .'js/jquery.scrollTo-1.4.2-min.js', array('jquery'), '', true);
+      wp_enqueue_script('parallax-script', plugin_dir_url( __FILE__ ) .'js/jquery.parallax-1.1.3.js', array('jquery'), '', true);
   }
 
-add_action( 'init', 'sliders_create_post_type' );
+add_action( 'init', 'parallax_create_post_type' );
 
 function parallax_create_post_type() {
   register_post_type( 'parallax',
@@ -72,35 +72,41 @@ function parallax_acf_notice() {
 
 
 
-   function parallax_init() {
-
-      parallax_add_html();
-      parallax_add_js();
+   function parallax_init($parallaxID) {
+//xPosition - Horizontal position of the element
+  //inertia - speed to move relative to vertical scroll. Example: 0.1 is one tenth the speed of scrolling, 2 is twice the speed of scrolling
+  //outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
+      parallax_add_html($parallaxID);
+      parallax_add_js($parallaxID);
 
    }
 
-   function parallax_add_js() {
+   function parallax_add_js($parallaxID) {
  
       echo "<script>";
 
       echo "jQuery(document).ready(function($){";
 
-      echo "$('#intro').parallax('50%', 0.1);";
+      echo "$('#second').parallax('".get_field("parallax_position")."%', 0.1);";
+      echo "$('.bg').parallax('50%', 0.4);";
+      echo "$('.bg2').parallax('20%', 0.6);";
 
       echo "});";
 
       echo "</script>";
   }
 
-   function parallax_add_html() {
+   function parallax_add_html($parallaxID) {
  ?>
-      	<div id="intro">
-			<div class="story">
-		    	<div class="float-left">
-				<h2>(Almost) Static Background</h2>
-		        <p>This section has a background that moves slightly slower than the user scrolls. This is achieved by changing the top position of the background for every pixel the page is scrolled.</p>
-		        </div>
-		    </div> <!--.story-->
-		</div>
+  <div id="second">
+    <div class="story"><div class="bg"></div><div class="bg2"></div>
+        <div class="float-right">
+              <h2>Multiple Backgrounds</h2>
+              <p>The multiple backgrounds applied to this section are moved in a similar way to the first section -- every time the user scrolls down the page by a pixel, the positions of the backgrounds are changed.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nibh erat, sagittis sit amet congue at, aliquam eu libero. Integer molestie, turpis vel ultrices facilisis, nisi mauris sollicitudin mauris, volutpat elementum enim urna eget odio. Donec egestas aliquet facilisis. Nunc eu nunc eget neque ornare fringilla. Nam vel sodales lectus. Nulla in pellentesque eros. Donec ultricies, enim vitae varius cursus, risus mauris iaculis neque, euismod sollicitudin metus erat vitae sapien. Sed pulvinar.</p>
+          </div>
+      </div> <!--.story-->
+      
+  </div> <!--#second-->
 <?php
   }
