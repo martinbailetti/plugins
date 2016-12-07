@@ -89,9 +89,6 @@ function slider_js($sliderID){
     $effect = implode(",",$effect);
 
   echo "<script>";
-
-
-
   echo "jQuery(document).ready(function($){";
 
   echo "$('#slider').nivoSlider({ 

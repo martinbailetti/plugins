@@ -60,7 +60,7 @@ if ( !is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 
 
 	//Importa la configuración ACF
-	include_once("acf_import.php");
+//	include_once("acf_import.php");
 
 }
 
@@ -72,10 +72,24 @@ function parallax_acf_notice() {
 
 
 
+   function parallax_init() {
+
+      parallax_add_html();
+      parallax_add_js();
+
+   }
 
    function parallax_add_js() {
  
+      echo "<script>";
+
+      echo "jQuery(document).ready(function($){";
+
       echo "$('#intro').parallax('50%', 0.1);";
+
+      echo "});";
+
+      echo "</script>";
   }
 
    function parallax_add_html() {
