@@ -87,9 +87,15 @@ function parallax_acf_notice() {
 
       echo "jQuery(document).ready(function($){";
 
-      echo "$('#second').parallax('".get_field("parallax_position")."%', 0.1);";
-      echo "$('.bg').parallax('50%', 0.4);";
-      echo "$('.bg2').parallax('20%', 0.6);";
+      echo "$('#parallax_".$parallaxID."').parallax('".get_field("parallax_position", $parallaxID)."%', ".get_field("parallax_inertia", $parallaxID).");";
+
+      $childs = get_field("parallax_childs", $parallaxID);
+
+      for($i=0; $i < count($childs); $i++){
+
+          echo "$('#parallax_".$parallaxID."_child_".$i."').parallax('".$childs[$i]["parallax_position"]."%', ".$childs[$i]["parallax_inertia"].");";
+
+      }
 
       echo "});";
 
@@ -98,14 +104,37 @@ function parallax_acf_notice() {
 
    function parallax_add_html($parallaxID) {
  ?>
-  <div id="second">
-    <div class="story"><div class="bg"></div><div class="bg2"></div>
-        <div class="float-right">
-              <h2>Multiple Backgrounds</h2>
-              <p>The multiple backgrounds applied to this section are moved in a similar way to the first section -- every time the user scrolls down the page by a pixel, the positions of the backgrounds are changed.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nibh erat, sagittis sit amet congue at, aliquam eu libero. Integer molestie, turpis vel ultrices facilisis, nisi mauris sollicitudin mauris, volutpat elementum enim urna eget odio. Donec egestas aliquet facilisis. Nunc eu nunc eget neque ornare fringilla. Nam vel sodales lectus. Nulla in pellentesque eros. Donec ultricies, enim vitae varius cursus, risus mauris iaculis neque, euismod sollicitudin metus erat vitae sapien. Sed pulvinar.</p>
-          </div>
+  <div class="parallax_layer" id="parallax_<?php echo $parallaxID ?>" style="background-image: url(<?php echo get_field("parallax_image", $parallaxID) ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;">
+    <div class="parallax_content">
+<?php
+      $childs = get_field("parallax_childs", $parallaxID);
+      for($i=0; $i < count($childs); $i++){
+?>
+    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo $childs[$i]["parallax_height"] ?>px;color: white;width:<?php echo $childs[$i]["parallax_width"] ?>px"></div>
+<?php
+      }
+?>
+
+<?php 
+  
+  $parallax_title = get_field("parallax_title", $parallaxID);
+  $parallax_text = get_field("parallax_text", $parallaxID);
+
+  if(!empty($parallax_title)){
+
+      echo '<h2>'.$parallax_title.'</h2>';
+
+  }
+
+  if(!empty($parallax_text)){
+
+      echo '<div class="parallax_text" style="float:right">'.$parallax_text.'</div>';
+
+  }
+ ?>
+    
       </div> <!--.story-->
+
       
   </div> <!--#second-->
 <?php

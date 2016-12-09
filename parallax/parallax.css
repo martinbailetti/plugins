@@ -4,56 +4,37 @@
 
 
 
-#header, #intro, #second{
-	width: 100%;
-}
 
-#intro{
-	background:url(images/firstBG.jpg) 50% 0 no-repeat fixed;
-	color: white;
-	height: 600px;
-	margin: 0 auto;
-	padding: 0;
-}
-
-
-
-.story{
+.parallax_content{
 	margin: 0 auto;
 	min-width: 980px;
 	overflow: auto;
 	width: 980px;
 }
 
-.story .float-left, .story .float-right{
+.parallax_content .float-left, .parallax_content .float-right{
 	padding: 100px 0 0 0;
 	position: relative;
 	width: 350px;	
 }
-#second{
-	background: url(images/secondBG.jpg) 50% 0 no-repeat fixed;
-	color: white;
-	height: 1300px;
+.parallax_layer{
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: 50% 0%;
 	margin: 0 auto;
 	overflow: hidden;
 	padding: 0;
+	position: absolute;
 }
-
-#second .bg{
-	background: url(images/trainers.png) 50% 0 no-repeat fixed;
-	height: 1300px;
+.parallax_layer_child{
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: 50% 0%;
 	margin: 0 auto;
 	padding: 0;
 	position: absolute;
-	width: 900px;
 	z-index: 200;
 }
-#second .bg2{
-	background: url(images/trainers.png) 50% 0 no-repeat fixed;
+.parallax_page{
 	height: 1300px;
-	margin: 0 auto;
-	padding: 0;
-	position: absolute;
-	width: 900px;
-	z-index: 200;
 }
