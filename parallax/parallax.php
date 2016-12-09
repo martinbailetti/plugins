@@ -111,7 +111,7 @@ function parallax_acf_notice() {
       $childs = get_field("parallax_childs", $parallaxID);
       for($i=0; $i < count($childs); $i++){
 ?>
-    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;width:<?php echo $childs[$i]["parallax_width"] ?>px"></div>
+    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;width:100%;z-index:20<?php echo $i ?>"></div>
 <?php
       }
 ?>

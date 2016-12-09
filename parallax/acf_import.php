@@ -1,4 +1,5 @@
 <?php
+
 if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array (
@@ -265,7 +266,7 @@ acf_add_local_field_group(array (
 					'required' => 1,
 					'conditional_logic' => 0,
 					'wrapper' => array (
-						'width' => 33,
+						'width' => 25,
 						'class' => '',
 						'id' => '',
 					),
@@ -286,7 +287,7 @@ acf_add_local_field_group(array (
 					'required' => 1,
 					'conditional_logic' => 0,
 					'wrapper' => array (
-						'width' => 33,
+						'width' => 25,
 						'class' => '',
 						'id' => '',
 					),
@@ -299,29 +300,6 @@ acf_add_local_field_group(array (
 					'disabled' => 0,
 				),
 				array (
-					'key' => 'field_584a261112053',
-					'label' => 'Ancho',
-					'name' => 'parallax_width',
-					'type' => 'number',
-					'instructions' => '',
-					'required' => 1,
-					'conditional_logic' => 0,
-					'wrapper' => array (
-						'width' => 33,
-						'class' => '',
-						'id' => '',
-					),
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'min' => '',
-					'max' => '',
-					'step' => '',
-					'readonly' => 0,
-					'disabled' => 0,
-				),
-				array (
 					'key' => 'field_5848e94360b0f',
 					'label' => 'Imagen',
 					'name' => 'parallax_image',
@@ -330,12 +308,12 @@ acf_add_local_field_group(array (
 					'required' => 1,
 					'conditional_logic' => 0,
 					'wrapper' => array (
-						'width' => 100,
+						'width' => 50,
 						'class' => '',
 						'id' => '',
 					),
 					'return_format' => 'url',
-					'preview_size' => 'thumbnail',
+					'preview_size' => 'medium',
 					'library' => 'all',
 					'min_width' => '',
 					'min_height' => '',
