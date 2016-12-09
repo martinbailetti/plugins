@@ -60,7 +60,7 @@ if ( !is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 
 
 	//Importa la configuración ACF
-//	include_once("acf_import.php");
+	include_once("acf_import.php");
 
 }
 
@@ -69,6 +69,7 @@ function parallax_acf_notice() {
 <div id="message" class="updated notice is-dismissible"><p>Sliders requiere la instalación del plugin <strong>Advanced Custom Fields</strong>.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Descartar este aviso.</span></button></div>
   <?php
 }
+
 
 
 
