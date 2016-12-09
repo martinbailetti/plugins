@@ -125,7 +125,7 @@ function parallax_acf_notice() {
 
   if(!empty($parallax_title) || !empty($parallax_text)){
 
-      $css = "width:".$parallax_content_width."px;";
+      $css = "width:".$parallax_content_width."px;z-index:300;";
       if($parallax_content_position==1){
         $css .= "float:right;";
       }else if($parallax_content_position==2){
