@@ -8,7 +8,6 @@ Author: Martín Bailetti
 Author URI: http://www.inthewok.com/
 License: GPL2
 */
-
   add_action( 'wp_enqueue_scripts', 'parallax_scripts',999);
   function parallax_scripts() {
  
@@ -35,12 +34,14 @@ function parallax_create_post_type() {
     'capability_type' => 'page',
     'has_archive' => true,
     'hierarchical' => false,
+    'publicly_queryable' => true,
 
       'labels' => array(
         'name' => __( 'Parallax' ),
         'singular_name' => __( 'Parallax' ),
         'add_new' => __( 'Añadir Parallax' ),
-        'add_new_item' => __( 'Añadir un nuevo Parallax' )
+        'add_new_item' => __( 'Añadir un nuevo Parallax' ),
+        'view_item' => __( 'Vista Previa' )
       ),
       'public' => true,
       'has_archive' => true,
