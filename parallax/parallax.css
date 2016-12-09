@@ -12,11 +12,12 @@
 	width: 980px;
 }
 
-.parallax_content .float-left, .parallax_content .float-right{
+.parallax_content_layer{
 	padding: 100px 0 0 0;
 	position: relative;
 	width: 350px;	
 }
+
 .parallax_layer{
 	background-repeat: no-repeat;
 	background-attachment: fixed;

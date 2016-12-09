@@ -110,7 +110,7 @@ function parallax_acf_notice() {
       $childs = get_field("parallax_childs", $parallaxID);
       for($i=0; $i < count($childs); $i++){
 ?>
-    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo $childs[$i]["parallax_height"] ?>px;color: white;width:<?php echo $childs[$i]["parallax_width"] ?>px"></div>
+    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;width:<?php echo $childs[$i]["parallax_width"] ?>px"></div>
 <?php
       }
 ?>
@@ -119,6 +119,23 @@ function parallax_acf_notice() {
   
   $parallax_title = get_field("parallax_title", $parallaxID);
   $parallax_text = get_field("parallax_text", $parallaxID);
+  $parallax_content_position = get_field("parallax_content_position", $parallaxID);
+  $parallax_content_width = get_field("parallax_content_width", $parallaxID);
+
+  if(!empty($parallax_title) || !empty($parallax_text)){
+
+      $css = "width:".$parallax_content_width."px;";
+      if($parallax_content_position==1){
+        $css .= "float:right;";
+      }else if($parallax_content_position==2){
+        $css .= "float:left;";
+      }else{
+        $css .= "margin-left:auto;margin-right:auto;";
+      }
+
+      echo '<div class="parallax_content_layer" style="'.$css.'">';
+
+  }
 
   if(!empty($parallax_title)){
 
@@ -128,7 +145,13 @@ function parallax_acf_notice() {
 
   if(!empty($parallax_text)){
 
-      echo '<div class="parallax_text" style="float:right">'.$parallax_text.'</div>';
+      echo '<div class="parallax_text">'.$parallax_text.'</div>';
+
+  }
+
+  if(!empty($parallax_title) || !empty($parallax_text)){
+
+      echo '</div>';
 
   }
  ?>
