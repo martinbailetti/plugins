@@ -8,15 +8,20 @@ Author: Martín Bailetti
 Author URI: http://www.inthewok.com/
 License: GPL2
 */
-  add_action( 'wp_enqueue_scripts', 'parallax_scripts',999);
-  function parallax_scripts() {
- 
-      wp_enqueue_style( 'parallax-style', plugin_dir_url( __FILE__ ).'parallax.css');
+  register_deactivation_hook( __FILE__, 'parallax_deactivate' );
+  function parallax_deactivate() {
 
-      wp_enqueue_script('scrollto-script', plugin_dir_url( __FILE__ ) .'js/jquery.scrollTo-1.4.2-min.js', array('jquery'), '', true);
-      wp_enqueue_script('localscroll-script', plugin_dir_url( __FILE__ ) .'js/jquery.localscroll-1.2.7-min.js', array('jquery'), '', true);
-      wp_enqueue_script('parallax-script', plugin_dir_url( __FILE__ ) .'js/jquery.parallax-1.1.3.js', array('jquery'), '', true);
+
+    flush_rewrite_rules();
   }
+
+
+  register_activation_hook( __FILE__, 'parallax_activate' );
+  function parallax_activate() {
+
+    flush_rewrite_rules();
+  }
+
 
 add_action( 'init', 'parallax_create_post_type' );
 
@@ -47,7 +52,21 @@ function parallax_create_post_type() {
       'has_archive' => true,
     )
   );
+   if ( get_option('plugin_settings_have_changed') == true ) {
+    flush_rewrite_rules();
+  }
 }
+
+
+  add_action( 'wp_enqueue_scripts', 'parallax_scripts',999);
+  function parallax_scripts() {
+ 
+      wp_enqueue_style( 'parallax-style', plugin_dir_url( __FILE__ ).'parallax.css');
+
+      wp_enqueue_script('scrollto-script', plugin_dir_url( __FILE__ ) .'js/jquery.scrollTo-1.4.2-min.js', array('jquery'), '', true);
+      wp_enqueue_script('localscroll-script', plugin_dir_url( __FILE__ ) .'js/jquery.localscroll-1.2.7-min.js', array('jquery'), '', true);
+      wp_enqueue_script('parallax-script', plugin_dir_url( __FILE__ ) .'js/jquery.parallax-1.1.3.js', array('jquery'), '', true);
+  }
 
 
 /*
@@ -89,13 +108,13 @@ function parallax_acf_notice() {
 
       echo "jQuery(document).ready(function($){";
 
-      echo "$('#parallax_".$parallaxID."').parallax('".get_field("parallax_position", $parallaxID)."%', ".get_field("parallax_inertia", $parallaxID).");";
+      echo "$('#parallax_".$parallaxID."').parallax('".get_field("parallax_position", $parallaxID)."%', 0, " .get_field("parallax_inertia", $parallaxID).");";
 
       $childs = get_field("parallax_childs", $parallaxID);
 
       for($i=0; $i < count($childs); $i++){
 
-          echo "$('#parallax_".$parallaxID."_child_".$i."').parallax('".$childs[$i]["parallax_position"]."%', ".$childs[$i]["parallax_inertia"].");";
+          echo "$('#parallax_".$parallaxID."_child_".$i."').parallax('".$childs[$i]["parallax_position"]."%', ".$childs[$i]["parallax_position_vertical"].", ".$childs[$i]["parallax_inertia"].");";
 
       }
 
@@ -106,13 +125,27 @@ function parallax_acf_notice() {
 
    function parallax_add_html($parallaxID) {
  ?>
+
+  <div class="parallax_container"  style="min-height:<?php echo get_field("parallax_height", $parallaxID) ?>px">
   <div class="parallax_layer" id="parallax_<?php echo $parallaxID ?>" style="background-image: url(<?php echo get_field("parallax_image", $parallaxID) ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;">
     <div class="parallax_content">
 <?php
       $childs = get_field("parallax_childs", $parallaxID);
       for($i=0; $i < count($childs); $i++){
+
+        $height =  $childs[$i]["parallax_height"];
+        if(empty($childs[$i]["parallax_height"])){
+
+          $height = "auto";
+
+        }else{
+
+          $height = $childs[$i]["parallax_height"]."px";
+
+
+        }
 ?>
-    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;width:100%;z-index:20<?php echo $i ?>"></div>
+    <div id="parallax_<?php echo $parallaxID."_child_".$i ?>" class="parallax_layer_child" style="background-image: url(<?php echo $childs[$i]["parallax_image"] ?>);background-size: auto <?php echo $height ?>;height: <?php echo get_field("parallax_height", $parallaxID) ?>px;color: white;width:100%;z-index:20<?php echo $i ?>"></div>
 <?php
       }
 ?>
@@ -123,10 +156,11 @@ function parallax_acf_notice() {
   $parallax_text = get_field("parallax_text", $parallaxID);
   $parallax_content_position = get_field("parallax_content_position", $parallaxID);
   $parallax_content_width = get_field("parallax_content_width", $parallaxID);
+  $parallax_content_padding_top = get_field("parallax_content_padding_top", $parallaxID);
 
   if(!empty($parallax_title) || !empty($parallax_text)){
 
-      $css = "width:".$parallax_content_width."px;z-index:300;";
+      $css = "padding-top:".$parallax_content_padding_top."px;width:".$parallax_content_width."px;z-index:300;";
       if($parallax_content_position==1){
         $css .= "float:right;";
       }else if($parallax_content_position==2){
@@ -158,9 +192,10 @@ function parallax_acf_notice() {
   }
  ?>
     
-      </div> <!--.story-->
+      </div> <!--.parallax_content-->
 
       
-  </div> <!--#second-->
+  </div> <!--.parallax_layer-->
+  </div> <!--.parallax_container-->
 <?php
   }

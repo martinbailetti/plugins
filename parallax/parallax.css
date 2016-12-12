@@ -5,18 +5,6 @@
 
 
 
-.parallax_content{
-	margin: 0 auto;
-	min-width: 980px;
-	overflow: auto;
-	width: 980px;
-}
-
-.parallax_content_layer{
-	padding: 100px 0 0 0;
-	position: relative;
-	width: 350px;	
-}
 
 .parallax_layer{
 	background-repeat: no-repeat;
@@ -26,6 +14,17 @@
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
+	width: 100%;
+}
+.parallax_content{
+	margin: 0 auto;
+	min-width: 100%;
+	overflow: auto;
+	width: 100%;
+}
+
+.parallax_content_layer{
+	position: relative;
 }
 .parallax_layer_child{
 	background-repeat: no-repeat;
@@ -34,7 +33,4 @@
 	margin: 0 auto;
 	padding: 0;
 	position: absolute;
-}
-.parallax_page{
-	height: 1300px;
 }
